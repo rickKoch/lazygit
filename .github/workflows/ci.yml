@@ -67,6 +67,8 @@ jobs:
           key: ${{runner.os}}-go-${{hashFiles('**/go.sum')}}-test
           restore-keys: |
             ${{runner.os}}-go-
+      - name: Setup tmpfs
+        run: sudo mount -t tmpfs -o size=2G tmpfs /home/runner/work/lazygit/lazygit
       - name: Test code
         # LONG_WAIT_BEFORE_FAIL means that for a given test assertion, we'll wait longer before failing
         run: |

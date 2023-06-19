@@ -55,7 +55,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup tmpfs
-        run: sudo mount -t tmpfs -o size=2G tmpfs
+        run: sudo mount -t tmpfs -o size=2G tmpfs /home/runner/work/lazygit/lazygit
       - name: Setup Go
         uses: actions/setup-go@v1
         with:

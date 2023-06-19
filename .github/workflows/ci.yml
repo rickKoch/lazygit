@@ -54,8 +54,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Setup tmpfs
-        run: sudo mount -t tmpfs -o size=2G tmpfs /home/runner/work/lazygit/lazygit
       - name: Setup Go
         uses: actions/setup-go@v1
         with:
@@ -69,6 +67,14 @@ jobs:
           key: ${{runner.os}}-go-${{hashFiles('**/go.sum')}}-test
           restore-keys: |
             ${{runner.os}}-go-
+      - name: Setup tmpfs
+        run: |
+          if [ ! -d "/home/runner/work/lazygit/lazygit" ]; then
+            echo "Directory '/home/runner/work/lazygit/lazygit' not found"
+            exit 1
+          fi
+          sudo mount -t tmpfs -o size=2G tmpfs /home/runner/work/lazygit/lazygit
+          sudo mount --bind tmpfs /home/runnergo/pkg/mod
       - name: Test code
         # LONG_WAIT_BEFORE_FAIL means that for a given test assertion, we'll wait longer before failing
         run: |

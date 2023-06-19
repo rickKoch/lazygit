@@ -54,8 +54,10 @@ jobs:
     steps:
       - name: Setup tmpfs
         run: |
-          sudo mkdir -p /home/runner/work/lazygit/lazygit
+          sudo mkdir -p /home/runner/work/lazygit/lazygit /home/runner/work/.cache/go-build /home/runner/work/go/pkg/mod
           sudo mount -t tmpfs -o size=100M tmpfs /home/runner/work/lazygit/lazygit
+          sudo mount -t tmpfs -o size=100M tmpfs/home/runner/work/.cache/go-build
+          sudo mount -t tmpfs -o size=100M tmpfs/home/runner/work/go/pkg/mod
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Go
